@@ -14,10 +14,7 @@ func Statistik() {
 
 	fmt.Printf("Total Investasi: %d\n", len(DataInvestasi))
 
-	saham := 0
-	obligasi := 0
-	reksadana := 0
-
+	saham, obligasi, reksadana := 0, 0, 0
 	for _, inv := range DataInvestasi {
 		switch inv.Jenis {
 		case "Saham":
@@ -29,7 +26,29 @@ func Statistik() {
 		}
 	}
 
-	fmt.Printf("Saham: %d\n", saham)
-	fmt.Printf("Obligasi: %d\n", obligasi)
-	fmt.Printf("ReksaDana: %d\n", reksadana)
+	type Item struct {
+		teks  string
+		nilai int
+	}
+
+	list := []Item{
+		{"Saham: %d\n", saham},
+		{"Obligasi: %d\n", obligasi},
+		{"ReksaDana: %d\n", reksadana},
+	}
+
+	// Logika Insertion Sort
+	for i := 1; i < 3; i++ {
+		key := list[i]
+		j := i - 1
+		for j >= 0 && list[j].nilai < key.nilai {
+			list[j+1] = list[j]
+			j--
+		}
+		list[j+1] = key
+	}
+
+	for _, item := range list {
+		fmt.Printf(item.teks, item.nilai)
+	}
 }

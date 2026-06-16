@@ -38,7 +38,6 @@ func LaporanPortofolio() {
 
 	fmt.Printf("\nTotal Portofolio: %.2f\n", total)
 
-	//Selection Sort (terbesar -> terkecil)
 	type RingkasanAset struct {
 		Label string
 		Nilai float64

@@ -1,4 +1,3 @@
-// logical/laporan.go
 package logical
 
 import (
@@ -38,7 +37,30 @@ func LaporanPortofolio() {
 	}
 
 	fmt.Printf("\nTotal Portofolio: %.2f\n", total)
-	fmt.Printf("Saham    : %.2f (%.1f%%)\n", saham, persen(saham))
-	fmt.Printf("Obligasi : %.2f (%.1f%%)\n", obligasi, persen(obligasi))
-	fmt.Printf("ReksaDana: %.2f (%.1f%%)\n", reksadana, persen(reksadana))
+
+	type RingkasanAset struct {
+		Label string
+		Nilai float64
+	}
+
+	listLaporan := []RingkasanAset{
+		{Label: "Saham    ", Nilai: saham},
+		{Label: "Obligasi ", Nilai: obligasi},
+		{Label: "ReksaDana", Nilai: reksadana},
+	}
+
+	n := len(listLaporan)
+	for i := 0; i < n-1; i++ {
+		idxMaksimal := i
+		for j := i + 1; j < n; j++ {
+			if listLaporan[j].Nilai > listLaporan[idxMaksimal].Nilai {
+				idxMaksimal = j
+			}
+		}
+		listLaporan[i], listLaporan[idxMaksimal] = listLaporan[idxMaksimal], listLaporan[i]
+	}
+
+	for _, laporan := range listLaporan {
+		fmt.Printf("%s : %.2f (%.1f%%)\n", laporan.Label, laporan.Nilai, persen(laporan.Nilai))
+	}
 }

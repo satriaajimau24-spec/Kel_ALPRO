@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// ─── Input ───────────────────────────────────────────────────────────────────
-
 func ClearScreen() {
 	fmt.Print("\033[H\033[2J")
 }
@@ -31,13 +29,11 @@ func GetFloatInput(prompt string) float64 {
 	return value
 }
 
-// ─── File ─────────────────────────────────────────────────────────────────────
-
 // MuatData membaca dataInvestasi.txt ke slice DataInvestasi saat program mulai.
 func MuatData() {
 	file, err := os.Open(DataFile)
 	if err != nil {
-		return // file belum ada, tidak masalah
+		return
 	}
 	defer file.Close()
 
@@ -77,8 +73,6 @@ func SimpanData() {
 			inv.ID, inv.Nama, inv.Jenis, inv.Dana, inv.NilaiKini)
 	}
 }
-
-// ─── Utilitas ─────────────────────────────────────────────────────────────────
 
 // CariIndexInvestasi mencari index berdasarkan ID (bisa ID penuh atau 8 karakter pertama).
 func CariIndexInvestasi(idInput string) int {

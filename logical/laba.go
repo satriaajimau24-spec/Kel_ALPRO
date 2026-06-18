@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func HitungKeuntungan() {
+func HitungLaba() {
 	fmt.Println("\n=== HITUNG KEUNTUNGAN / KERUGIAN ===")
 
 	if len(DataInvestasi) == 0 {

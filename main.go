@@ -14,7 +14,7 @@ func main() {
 		fmt.Println("1. Tambah Investasi")
 		fmt.Println("2. Ubah Investasi")
 		fmt.Println("3. Hapus Investasi")
-		fmt.Println("4. Hitung Keuntungan")
+		fmt.Println("4. Hitung Laba")
 		fmt.Println("5. Cari Investasi")
 		fmt.Println("6. Urutkan Investasi")
 		fmt.Println("7. Laporan Portofolio")
@@ -29,7 +29,7 @@ func main() {
 		case "3":
 			logical.HapusInvestasi()
 		case "4":
-			logical.HitungKeuntungan()
+			logical.HitungLaba()
 		case "5":
 			logical.CariInvestasi()
 		case "6":

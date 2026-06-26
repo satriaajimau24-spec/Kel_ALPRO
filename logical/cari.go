@@ -14,31 +14,28 @@ func CariInvestasi() {
 		return
 	}
 
-	fmt.Println("1. Sequential Search")
-	fmt.Println("2. Binary Search")
+	fmt.Println("1. Sequential Search (Nama/Jenis)")
+	fmt.Println("2. Binary Search (ID)")
 
 	pilihan := GetInput("Pilih metode pencarian (1-2): ")
 
 	switch pilihan {
-
 	case "1":
 		sequentialSearch()
-
 	case "2":
 		binarySearch()
-
 	default:
 		fmt.Println("Pilihan tidak valid")
 	}
 }
 
-// ===============================
+// =====================================
 // SEQUENTIAL SEARCH
-// ===============================
+// =====================================
 
 func sequentialSearch() {
 
-	kataKunci := strings.ToLower(GetInput("Masukkan kata kunci: "))
+	kataKunci := strings.ToLower(GetInput("Masukkan nama atau jenis aset: "))
 
 	ditemukan := false
 
@@ -47,12 +44,7 @@ func sequentialSearch() {
 		if strings.Contains(strings.ToLower(inv.Nama), kataKunci) ||
 			strings.Contains(strings.ToLower(inv.Jenis), kataKunci) {
 
-			fmt.Printf("\nID: %s\n", inv.ID[:8])
-			fmt.Printf("Nama: %s\n", inv.Nama)
-			fmt.Printf("Jenis: %s\n", inv.Jenis)
-			fmt.Printf("Dana: %.2f\n", inv.Dana)
-			fmt.Printf("Nilai Kini: %.2f\n", inv.NilaiKini)
-
+			tampilkanData(inv)
 			ditemukan = true
 		}
 	}
@@ -62,18 +54,24 @@ func sequentialSearch() {
 	}
 }
 
-// ===============================
+// =====================================
 // BINARY SEARCH
-// ===============================
+// =====================================
 
 func binarySearch() {
 
-	namaCari := strings.ToLower(GetInput("Masukkan nama aset: "))
-
-	// Binary Search membutuhkan data yang sudah terurut
+	// Urutkan berdasarkan ID
 	sort.Slice(DataInvestasi, func(i, j int) bool {
-		return strings.ToLower(DataInvestasi[i].Nama) < strings.ToLower(DataInvestasi[j].Nama)
+		return DataInvestasi[i].ID < DataInvestasi[j].ID
 	})
+
+	fmt.Println("\nDaftar ID Investasi:")
+
+	for _, inv := range DataInvestasi {
+		fmt.Printf("%s - %s\n", inv.ID[:8], inv.Nama)
+	}
+
+	idCari := strings.ToLower(GetInput("\nMasukkan 8 karakter ID: "))
 
 	kiri := 0
 	kanan := len(DataInvestasi) - 1
@@ -82,22 +80,15 @@ func binarySearch() {
 
 		tengah := (kiri + kanan) / 2
 
-		namaTengah := strings.ToLower(DataInvestasi[tengah].Nama)
+		idTengah := strings.ToLower(DataInvestasi[tengah].ID[:8])
 
-		if namaTengah == namaCari {
-
-			inv := DataInvestasi[tengah]
+		if idTengah == idCari {
 
 			fmt.Println("\nData ditemukan!")
-			fmt.Printf("ID: %s\n", inv.ID[:8])
-			fmt.Printf("Nama: %s\n", inv.Nama)
-			fmt.Printf("Jenis: %s\n", inv.Jenis)
-			fmt.Printf("Dana: %.2f\n", inv.Dana)
-			fmt.Printf("Nilai Kini: %.2f\n", inv.NilaiKini)
-
+			tampilkanData(DataInvestasi[tengah])
 			return
 
-		} else if namaCari < namaTengah {
+		} else if idCari < idTengah {
 
 			kanan = tengah - 1
 
@@ -109,4 +100,19 @@ func binarySearch() {
 	}
 
 	fmt.Println("Investasi tidak ditemukan.")
+}
+
+// =====================================
+// MENAMPILKAN DATA
+// =====================================
+
+func tampilkanData(inv Investasi) {
+
+	fmt.Println("--------------------------------")
+	fmt.Printf("ID         : %s\n", inv.ID)
+	fmt.Printf("Nama       : %s\n", inv.Nama)
+	fmt.Printf("Jenis      : %s\n", inv.Jenis)
+	fmt.Printf("Dana       : Rp %.2f\n", inv.Dana)
+	fmt.Printf("Nilai Kini : Rp %.2f\n", inv.NilaiKini)
+	fmt.Println("--------------------------------")
 }

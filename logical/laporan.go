@@ -6,7 +6,7 @@ import (
 
 func LaporanPortofolio() {
 	fmt.Println("\n=== LAPORAN PORTOFOLIO ===")
-
+	
 	if len(DataInvestasi) == 0 {
 		fmt.Println("Tidak ada data investasi")
 		return
